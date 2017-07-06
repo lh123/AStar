@@ -5,6 +5,16 @@ AStar::AStar(std::vector<std::vector<int>>& map)
 {
 	mCallBack = nullptr;
 	mMap = map;
+	for (int i = 0; i < mMap.size(); i++) {
+		std::vector<Point *> v;
+		for (int j = 0; j < mMap.at(i).size(); j++) {
+			int value = mMap.at(i).at(j);
+			PointType type = value == 0 ? PointType::NORMAL : PointType::WALL;
+			Point *p = new Point(type);
+			v.push_back(p);
+		}
+		mAstarMap.push_back(std::move(v));
+	}
 }
 
 AStar::~AStar()
@@ -14,17 +24,6 @@ AStar::~AStar()
 
 std::list<ANode> AStar::findPath(int startX, int startY, int endX, int endY)
 {
-	realse();
-	for (int i = 0; i<mMap.size(); i++) {
-		std::vector<Point *> v;
-		for (int j = 0; j<mMap.at(i).size(); j++) {
-			int value = mMap.at(i).at(j);
-			PointType type = value == 0 ? PointType::NORMAL : PointType::WALL;
-			Point *p = new Point(type);
-			v.push_back(p);
-		}
-		mAstarMap.push_back(std::move(v));
-	}
 	ANode *start = mAstarMap[startY][startX]->node;
 	mEnd = mAstarMap[endY][endX]->node;
 	start->x = startX;
@@ -61,6 +60,8 @@ void AStar::setCallBack(const CallBack & call)
 
 ANode *AStar::findPath(ANode *start, ANode *end)
 {
+	mOpenList.clear();
+	mCloseList.clear();
 	mOpenList.push_back(start);
 	while (!mOpenList.empty()) {
 		ANode *currentNode = getLeastFNode();
