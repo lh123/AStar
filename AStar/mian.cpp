@@ -47,7 +47,7 @@ int main()
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, } };
 	AStar astar(maze);
 	std::list<ANode> path = astar.findPath(5, 16, 41, 16);
-	auto map = astar.dumpMap();
+	//auto map = astar.dumpMap();
 	system("pause");
 	return 0;
 }

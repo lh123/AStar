@@ -103,9 +103,21 @@ int AStar::calcF(ANode *node)
 ANode *AStar::getLeastFNode()
 {
 	ANode *retNode = mOpenList.back();
+	std::list<ANode *> nodes;
 	for (auto lit = mOpenList.rbegin(); lit != mOpenList.rend(); lit++) {
 		if (**lit < *retNode) {
 			retNode = *lit;
+		}
+	}
+
+	for (auto lit = mOpenList.rbegin(); lit != mOpenList.rend(); lit++) {
+		if ((**lit).F == (*retNode).F) {
+			nodes.push_back(*lit);
+		}
+	}
+	for (auto n : nodes) {
+		if (n->H < retNode->H) {
+			retNode = n;
 		}
 	}
 	return retNode;
